@@ -88,14 +88,16 @@ void Stop() {
 	if(!isRunning) {
 		return;
 	}
+	isRunning = false;
 
+	udev_monitor_unref(mon);
+	udev_unref(udev);
 	uv_mutex_destroy(&notify_mutex);
 	uv_signal_stop(&int_signal);
 	uv_signal_stop(&term_signal);
 	uv_close((uv_handle_t *) &async_handler, NULL);
 	uv_cond_destroy(&notifyDeviceHandled);
 	
-	isRunning = false;
 }
 
 void InitDetection() {
@@ -241,8 +243,6 @@ static void cbWork(uv_work_t *req) {
 }
 
 static void cbAfter(uv_work_t *req, int status) {
-	udev_monitor_unref(mon);
-	udev_unref(udev);
 
 	Stop();
 }
