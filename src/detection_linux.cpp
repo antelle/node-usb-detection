@@ -233,6 +233,7 @@ static void cbWork(uv_work_t *req) {
 		}
 	}
 
+	// After the loop stops running, clean up all of our references and close gracefully
 	udev_monitor_unref(mon);
 	udev_unref(udev);
 	uv_mutex_destroy(&notify_mutex);
