@@ -233,7 +233,6 @@ static void cbWork(uv_work_t *req) {
 		}
 	}
 
-
 	udev_monitor_unref(mon);
 	udev_unref(udev);
 	uv_mutex_destroy(&notify_mutex);
