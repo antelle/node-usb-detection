@@ -90,14 +90,6 @@ void Stop() {
 	}
 
 	isRunning = false;
-
-	udev_monitor_unref(mon);
-	udev_unref(udev);
-	uv_mutex_destroy(&notify_mutex);
-	uv_signal_stop(&int_signal);
-	uv_signal_stop(&term_signal);
-	uv_close((uv_handle_t *) &async_handler, NULL);
-	uv_cond_destroy(&notifyDeviceHandled);
 }
 
 void InitDetection() {
@@ -240,6 +232,15 @@ static void cbWork(uv_work_t *req) {
 			udev_device_unref(dev);
 		}
 	}
+
+
+	udev_monitor_unref(mon);
+	udev_unref(udev);
+	uv_mutex_destroy(&notify_mutex);
+	uv_signal_stop(&int_signal);
+	uv_signal_stop(&term_signal);
+	uv_close((uv_handle_t *) &async_handler, NULL);
+	uv_cond_destroy(&notifyDeviceHandled);
 }
 
 static void cbAfter(uv_work_t *req, int status) {
